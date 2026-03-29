@@ -193,6 +193,19 @@ Month 3+: Scale
 - [ ] [tracking requirement 2]
 ```
 
+## Report Generation
+
+After writing the campaign plan markdown to a file, generate a professional HTML version:
+
+```bash
+python ${CLAUDE_PLUGIN_ROOT}/skills/media-buying/scripts/md_to_report.py <output_file> --open
+```
+
+This converts the markdown into a client-ready HTML report with:
+- Dark blue header with "Campaign Plan" title
+- Styled tables for campaign structure and budget allocation
+- Print-ready styling for PDF export via browser
+
 ## Rules
 
 - NEVER skip Discovery. If the user hasn't provided key inputs, ASK before planning.

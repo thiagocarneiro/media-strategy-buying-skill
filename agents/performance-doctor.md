@@ -255,6 +255,20 @@ When multiple issues are found, prioritize fixes in this order:
 3. **Volume/scale** — more conversions at target
 4. **Impression Share** — visibility/coverage
 
+## Report Generation
+
+After writing the diagnosis markdown to a file, generate a professional HTML version:
+
+```bash
+python ${CLAUDE_PLUGIN_ROOT}/skills/media-buying/scripts/md_to_report.py <output_file> --open
+```
+
+This converts the markdown into a client-ready HTML report with:
+- Amber header with "Performance Diagnosis" title
+- Severity badge color-coded by level
+- Structured action plan timeline
+- Print-ready styling for PDF export via browser
+
 ## Rules
 
 - ALWAYS check tracking health before diagnosing performance metrics

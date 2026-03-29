@@ -116,6 +116,20 @@ When auditing, keep these common issues in mind (by frequency):
 - 71% have inaccurate tracking configurations
 - 97% fail to capture user attention effectively with creatives
 
+## Report Generation
+
+After writing the audit report markdown to a file, generate a professional HTML version:
+
+```bash
+python ${CLAUDE_PLUGIN_ROOT}/skills/media-buying/scripts/md_to_report.py <output_file> --open
+```
+
+This converts the markdown into a client-ready HTML report with:
+- Red header with "Media Audit Report" title
+- Severity badges (P0/P1/P2/P3) color-coded
+- Overall health status badge
+- Print-ready styling for PDF export via browser
+
 ## Rules
 
 - NEVER skip Phase 1 (Tracking). If tracking is broken, flag it as P0 and note that all other metrics may be unreliable.
