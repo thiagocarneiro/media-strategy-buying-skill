@@ -7,6 +7,7 @@ Usage:
     python md_to_report.py <input.md> [--type audit|plan|diagnosis] [--open]
 """
 
+import html as html_mod
 import re
 import sys
 import webbrowser
@@ -261,25 +262,20 @@ def _inline(text: str) -> str:
 
 
 def main():
-    args = sys.argv[1:]
-    if not args or args[0] in ("-h", "--help"):
-        print(__doc__.strip())
-        sys.exit(0)
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("input", help="Markdown report file to convert")
+    parser.add_argument("--type", choices=["audit", "plan", "diagnosis"], help="Report type (auto-detected if omitted)")
+    parser.add_argument("--open", action="store_true", help="Open the generated HTML in a browser")
+    parsed = parser.parse_args()
 
-    input_path = Path(args[0])
+    input_path = Path(parsed.input)
     if not input_path.exists():
         print(f"Error: {input_path} not found")
         sys.exit(1)
 
-    report_type = None
-    open_browser = False
-    for arg in args[1:]:
-        if arg == "--open":
-            open_browser = True
-        elif arg == "--type":
-            pass
-        elif arg in ("audit", "plan", "diagnosis"):
-            report_type = arg
+    report_type = parsed.type
+    open_browser = parsed.open
 
     content = input_path.read_text(encoding="utf-8")
 
@@ -292,14 +288,17 @@ def main():
     body_html = convert_markdown_to_html(content)
 
     template_path = Path(__file__).parent.parent / "templates" / "report-template.html"
+    if not template_path.exists():
+        print(f"Error: template not found at {template_path}")
+        sys.exit(1)
     template = template_path.read_text(encoding="utf-8")
 
     subtitle = meta["title"] if meta["title"] != config["title"] else ""
 
-    html = template.replace("{{REPORT_TITLE}}", config["title"])
-    html = html.replace("{{SUBTITLE}}", subtitle)
-    html = html.replace("{{DATE}}", meta["date"])
-    html = html.replace("{{PLATFORM}}", meta["platform"])
+    html = template.replace("{{REPORT_TITLE}}", html_mod.escape(config["title"]))
+    html = html.replace("{{SUBTITLE}}", html_mod.escape(subtitle))
+    html = html.replace("{{DATE}}", html_mod.escape(meta["date"]))
+    html = html.replace("{{PLATFORM}}", html_mod.escape(meta["platform"]))
     html = html.replace("{{TYPE_COLOR}}", config["color"])
     html = html.replace("{{STATUS_BADGE}}", status_badge)
     html = html.replace("{{CONTENT}}", body_html)
