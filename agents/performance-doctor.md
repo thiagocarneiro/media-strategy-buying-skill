@@ -255,6 +255,22 @@ When multiple issues are found, prioritize fixes in this order:
 3. **Volume/scale** — more conversions at target
 4. **Impression Share** — visibility/coverage
 
+## Report Generation
+
+After completing the diagnosis, save it to a file (e.g., `diagnosis-<client>-<YYYY-MM-DD>.md`), then generate a professional HTML version:
+
+```bash
+SCRIPT=$(find ~ -maxdepth 10 -name "md_to_report.py" -path "*/media-strategy-buying-skill/*" 2>/dev/null | head -1)
+[ -z "$SCRIPT" ] && echo "Error: md_to_report.py not found. Is the media-strategy-buying-skill plugin installed?" && exit 1
+python3 "$SCRIPT" diagnosis-<client>-<YYYY-MM-DD>.md --open
+```
+
+This converts the markdown into a client-ready HTML report with:
+- Amber header with "Performance Diagnosis" title
+- Severity badge color-coded by level
+- Structured action plan timeline
+- Print-ready styling for PDF export via browser
+
 ## Rules
 
 - ALWAYS check tracking health before diagnosing performance metrics

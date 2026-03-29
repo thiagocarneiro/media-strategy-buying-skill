@@ -116,6 +116,22 @@ When auditing, keep these common issues in mind (by frequency):
 - 71% have inaccurate tracking configurations
 - 97% fail to capture user attention effectively with creatives
 
+## Report Generation
+
+After completing the audit, save the report to a file (e.g., `audit-<client>-<YYYY-MM-DD>.md`), then generate a professional HTML version:
+
+```bash
+SCRIPT=$(find ~ -maxdepth 10 -name "md_to_report.py" -path "*/media-strategy-buying-skill/*" 2>/dev/null | head -1)
+[ -z "$SCRIPT" ] && echo "Error: md_to_report.py not found. Is the media-strategy-buying-skill plugin installed?" && exit 1
+python3 "$SCRIPT" audit-<client>-<YYYY-MM-DD>.md --open
+```
+
+This converts the markdown into a client-ready HTML report with:
+- Red header with "Media Audit Report" title
+- Severity badges (P0/P1/P2/P3) color-coded
+- Overall health status badge
+- Print-ready styling for PDF export via browser
+
 ## Rules
 
 - NEVER skip Phase 1 (Tracking). If tracking is broken, flag it as P0 and note that all other metrics may be unreliable.

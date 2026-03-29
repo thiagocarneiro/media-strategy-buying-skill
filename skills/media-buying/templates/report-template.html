@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{REPORT_TITLE}}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.08);
+        }
+
+        /* === HEADER === */
+        .header {
+            background: {{TYPE_COLOR}};
+            color: white;
+            padding: 40px 50px 30px;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+        .header-subtitle {
+            font-size: 16px;
+            opacity: 0.85;
+            margin-bottom: 16px;
+        }
+        .header-meta {
+            font-size: 13px;
+            opacity: 0.7;
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .header-meta span::before {
+            content: "•";
+            margin-right: 8px;
+        }
+        .header-meta span:first-child::before {
+            content: "";
+            margin-right: 0;
+        }
+
+        /* === STATUS BADGE === */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
+        }
+        .status-critical { background: #FEE2E2; color: #991B1B; }
+        .status-warning { background: #FEF3C7; color: #92400E; }
+        .status-healthy { background: #D1FAE5; color: #065F46; }
+        .status-info { background: #DBEAFE; color: #1E40AF; }
+
+        /* === BODY CONTENT === */
+        .content {
+            padding: 40px 50px 50px;
+        }
+        .content h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111827;
+            margin-top: 36px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid {{TYPE_COLOR}};
+        }
+        .content h2:first-child { margin-top: 0; }
+        .content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin-top: 24px;
+            margin-bottom: 10px;
+        }
+        .content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4B5563;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+        .content p {
+            margin-bottom: 12px;
+            color: #374151;
+        }
+        .content ul, .content ol {
+            margin: 8px 0 16px 24px;
+            color: #374151;
+        }
+        .content li {
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        .content li ul, .content li ol {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+        .content strong { color: #111827; }
+        .content code {
+            background: #F3F4F6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 13px;
+            font-family: "SF Mono", "Fira Code", monospace;
+        }
+        .content hr {
+            border: none;
+            border-top: 1px solid #E5E7EB;
+            margin: 28px 0;
+        }
+
+        /* === TABLES === */
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 13px;
+        }
+        .content th {
+            background: #F9FAFB;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #D1D5DB;
+            color: #374151;
+        }
+        .content td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #E5E7EB;
+            color: #4B5563;
+        }
+        .content tr:nth-child(even) td {
+            background: #F9FAFB;
+        }
+
+        /* === SEVERITY BADGES === */
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-p0 { background: #FEE2E2; color: #991B1B; }
+        .badge-p1 { background: #FFEDD5; color: #9A3412; }
+        .badge-p2 { background: #FEF9C3; color: #854D0E; }
+        .badge-p3 { background: #DBEAFE; color: #1E40AF; }
+        .badge-critical { background: #FEE2E2; color: #991B1B; }
+        .badge-high { background: #FFEDD5; color: #9A3412; }
+        .badge-moderate { background: #FEF9C3; color: #854D0E; }
+        .badge-low { background: #D1FAE5; color: #065F46; }
+
+        /* === CHECKLIST === */
+        .content li.checklist-item {
+            list-style: none;
+            margin-left: -20px;
+            padding-left: 4px;
+        }
+        .content li.checklist-item::before {
+            content: "☐ ";
+            color: #9CA3AF;
+        }
+        .content li.checklist-done::before {
+            content: "☑ ";
+            color: #059669;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            padding: 20px 50px;
+            background: #F9FAFB;
+            border-top: 1px solid #E5E7EB;
+            font-size: 11px;
+            color: #9CA3AF;
+            display: flex;
+            justify-content: space-between;
+        }
+        .footer-disclaimer {
+            font-style: italic;
+            max-width: 60%;
+        }
+
+        /* === PRINT === */
+        @media print {
+            body { background: white; font-size: 12px; }
+            .container { box-shadow: none; margin: 0; max-width: 100%; }
+            .header { padding: 30px 40px 20px; }
+            .content { padding: 30px 40px 40px; }
+            .content h2 { page-break-after: avoid; }
+            .content table { page-break-inside: avoid; }
+            .footer { position: fixed; bottom: 0; left: 0; right: 0; }
+            @page { margin: 15mm 12mm; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{REPORT_TITLE}}</h1>
+            <div class="header-subtitle">{{SUBTITLE}}</div>
+            <div class="header-meta">
+                <span>{{DATE}}</span>
+                <span>{{PLATFORM}}</span>
+            </div>
+            {{STATUS_BADGE}}
+        </div>
+        <div class="content">
+            {{CONTENT}}
+        </div>
+        <div class="footer">
+            <div class="footer-disclaimer">Confidential — prepared for client use only. Do not distribute without authorization.</div>
+            <div>Generated by Media Buying Skill · {{DATE}}</div>
+        </div>
+    </div>
+</body>
+</html>

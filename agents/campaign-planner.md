@@ -193,6 +193,21 @@ Month 3+: Scale
 - [ ] [tracking requirement 2]
 ```
 
+## Report Generation
+
+After completing the campaign plan, save it to a file (e.g., `plan-<client>-<YYYY-MM-DD>.md`), then generate a professional HTML version:
+
+```bash
+SCRIPT=$(find ~ -maxdepth 10 -name "md_to_report.py" -path "*/media-strategy-buying-skill/*" 2>/dev/null | head -1)
+[ -z "$SCRIPT" ] && echo "Error: md_to_report.py not found. Is the media-strategy-buying-skill plugin installed?" && exit 1
+python3 "$SCRIPT" plan-<client>-<YYYY-MM-DD>.md --open
+```
+
+This converts the markdown into a client-ready HTML report with:
+- Dark blue header with "Campaign Plan" title
+- Styled tables for campaign structure and budget allocation
+- Print-ready styling for PDF export via browser
+
 ## Rules
 
 - NEVER skip Discovery. If the user hasn't provided key inputs, ASK before planning.
