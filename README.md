@@ -34,12 +34,7 @@ agents/
 ## Installation
 
 ```bash
-# From local path
-/plugin install /path/to/media-strategy-buying-skill
-
-# Or clone and install
-git clone <repo-url>
-/plugin install ./media-strategy-buying-skill
+/plugin install https://github.com/thiagocarneiro/media-strategy-buying-skill
 ```
 
 ## Usage
