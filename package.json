@@ -1,0 +1,13 @@
+{
+  "name": "media-strategy-buying-skill",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Claude Code plugin for digital media strategy, buying, and optimization across Google Ads and Meta",
+  "keywords": [
+    "claude-code-plugin",
+    "media-buying",
+    "google-ads",
+    "meta-ads"
+  ],
+  "license": "MIT"
+}

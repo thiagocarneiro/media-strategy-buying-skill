@@ -1,0 +1,17 @@
+{
+  "name": "media-strategy-buying-skill",
+  "description": "Digital media strategy, buying, and optimization skills for Google Ads and Meta (Facebook/Instagram). Equips AI agents with cross-platform planning, campaign execution, optimization, troubleshooting, and auditing capabilities.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Thiago Carneiro"
+  },
+  "license": "MIT",
+  "keywords": [
+    "media-buying",
+    "google-ads",
+    "meta-ads",
+    "digital-marketing",
+    "campaign-optimization",
+    "media-strategy"
+  ]
+}

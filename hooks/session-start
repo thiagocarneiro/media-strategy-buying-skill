@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PLUGIN_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SKILL_FILE="$PLUGIN_ROOT/skills/media-buying/SKILL.md"
+
+if [ ! -f "$SKILL_FILE" ]; then
+  exit 0
+fi
+
+# Read SKILL.md content
+SKILL_CONTENT=$(cat "$SKILL_FILE")
+
+# Escape for JSON embedding
+ESCAPED_CONTENT=$(printf '%s' "$SKILL_CONTENT" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))')
+
+# Output for Claude Code hook system
+printf '{"hookSpecificOutput":{"additionalContext":%s}}' "$ESCAPED_CONTENT"
