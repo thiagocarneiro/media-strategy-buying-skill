@@ -195,10 +195,11 @@ Month 3+: Scale
 
 ## Report Generation
 
-After writing the campaign plan markdown to a file, generate a professional HTML version:
+After completing the campaign plan, save it to a file (e.g., `plan-<client>-<YYYY-MM-DD>.md`), then generate a professional HTML version:
 
 ```bash
-python ${CLAUDE_PLUGIN_ROOT}/skills/media-buying/scripts/md_to_report.py <output_file> --open
+SCRIPT=$(find ~ -maxdepth 10 -name "md_to_report.py" -path "*/media-strategy-buying-skill/*" 2>/dev/null | head -1)
+python3 "$SCRIPT" plan-<client>-<YYYY-MM-DD>.md --open
 ```
 
 This converts the markdown into a client-ready HTML report with:
