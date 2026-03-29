@@ -71,7 +71,7 @@ def extract_status(content: str, report_type: str) -> str:
             r"\*\*Overall Health\*?\*?:\s*\*?\*?\s*(.+?)$", content, re.MULTILINE
         )
         if health_match:
-            health = health_match.group(1).strip().rstrip("*")
+            health = html_mod.escape(health_match.group(1).strip().rstrip("*"))
             if "critical" in health.lower():
                 return f'<div class="status-badge status-critical">{health}</div>'
             elif "needs" in health.lower() or "warning" in health.lower():
@@ -83,7 +83,7 @@ def extract_status(content: str, report_type: str) -> str:
             r"\*\*Severity\*?\*?:\s*\*?\*?\s*(.+?)$", content, re.MULTILINE
         )
         if severity_match:
-            severity = severity_match.group(1).strip().rstrip("*")
+            severity = html_mod.escape(severity_match.group(1).strip().rstrip("*"))
             if "critical" in severity.lower():
                 return f'<div class="status-badge status-critical">{severity}</div>'
             elif "high" in severity.lower():
@@ -227,6 +227,8 @@ def convert_markdown_to_html(md: str) -> str:
 
 
 def _inline(text: str) -> str:
+    # Escape HTML special chars before any substitution
+    text = html_mod.escape(text)
     # Severity badges
     text = re.sub(
         r"\bP0\b", '<span class="badge badge-p0">P0</span>', text

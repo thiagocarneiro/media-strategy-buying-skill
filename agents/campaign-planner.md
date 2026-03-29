@@ -199,6 +199,7 @@ After completing the campaign plan, save it to a file (e.g., `plan-<client>-<YYY
 
 ```bash
 SCRIPT=$(find ~ -maxdepth 10 -name "md_to_report.py" -path "*/media-strategy-buying-skill/*" 2>/dev/null | head -1)
+[ -z "$SCRIPT" ] && echo "Error: md_to_report.py not found. Is the media-strategy-buying-skill plugin installed?" && exit 1
 python3 "$SCRIPT" plan-<client>-<YYYY-MM-DD>.md --open
 ```
 
